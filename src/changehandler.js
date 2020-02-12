@@ -38,39 +38,32 @@ class ChangeHandler {
     }
   }
 
-  giveChange(typeOfCoin) {
-    // TODO return the correct change in the following format...
-    if (this.cashTendered > this.amountDue) {
-      this.changeDue = this.cashTendered - this.amountDue
-      while (this.changeDue > 0) {
-        while (this.changeDue >= 25) {
-          this.changeDue -= 25;
-          quarters += 1;
-        }
-        while (this.changeDue >= 10) {
-          this.changeDue -= 10;
-          dimes += 1;
-        }
-        while (this.changeDue >= 5) {
-          this.changeDue -= 5;
-          nickels += 1;
-        }
-        while (this.changeDue >= 1) {
-          this.changeDue -= 1;
-          pennies += 1;
-        }
+  giveChange() {
+    let changeDue = {
+      quarters: 0,
+      dimes: 0,
+      nickels: 0,
+      pennies: 0
+    };
+    while (this.cashTendered > this.amountDue) {
+      if (this.cashTendered - this.amountDue >= 25) {
+        this.cashTendered -= 25;
+        changeDue.quarters++;
+      } else if (this.cashTendered - this.amountDue >= 10) {
+        this.cashTendered -= 10;
+        changeDue.dimes++;
+      } else if (this.cashTendered - this.amountDue > 5) {
+        this.cashTendered -= 5;
+        changeDue.nickels++;
+      } else {
+        this.cashTendered -= 1;
+        changeDue.pennies++;
       }
     }
+    return changeDue;
   }
 }
 
-return {
-  quarters: 0,
-  dimes: 0,
-  nickels: 0,
-  pennies: 0
-};
-
 module.exports = {
   ChangeHandler
-};
+}
